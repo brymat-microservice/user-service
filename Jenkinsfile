@@ -6,8 +6,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'user-service-image'
         CONTAINER_NAME = 'user-service-container'
-        DOCKER_USERNAME = 'bryamat24'
-        REGISTRY_CREDENTIAL_ID = credentials('registry_credential_id')
+        DOCKER_USERNAME = 'brymat24'
     }
 
     stages {
@@ -24,7 +23,7 @@ pipeline {
         stage('Release') {
             steps {
                 script {
-                    docker.withRegistry("", "${REGISTRY_CREDENTIALS_ID}") {
+                    docker.withRegistry("", 'registry_credential_id') {
                         def image = docker.image("${DOCKER_IMAGE}")
                         image.tag("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
                         image.push()
