@@ -42,7 +42,7 @@ pipeline {
         always {
             sh "docker rm -f ${CONTAINER_NAME}"
             sh "docker rmi ${DOCKER_IMAGE}"
-            sh "docker rmi ${REGISTRY_URL}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
+            sh "docker rmi ${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
         }
     }
 }
