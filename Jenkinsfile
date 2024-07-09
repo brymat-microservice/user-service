@@ -29,7 +29,7 @@ pipeline {
     post {
         always {
             sh "docker rm -f ${CONTAINER_NAME}"
-            sh "docker rm image ${DOCKER_IMAGE}"
+            sh "docker rmi ${DOCKER_IMAGE}"
         }
     }
 }
