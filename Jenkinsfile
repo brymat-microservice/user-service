@@ -14,7 +14,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh "docker build -t ${DOCKER_IMAGE} ."
-                sh "echo ${REGISTRY_CREDENTIAL_ID}"
             }
         }
         stage('Test') {
@@ -25,7 +24,6 @@ pipeline {
         stage('Release') {
             steps {
                 script {
-                    sh "echo ${REGISTRY_CREDENTIAL_ID}"
                     docker.withRegistry("", "${REGISTRY_CREDENTIALS_ID}") {
                         def image = docker.image("${DOCKER_IMAGE}")
                         image.tag("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
