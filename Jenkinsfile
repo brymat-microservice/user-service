@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }
         stage('Test') {
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh 'preparing deployment...'
+                sh 'echo preparing deployment...'
             }
         }
     }

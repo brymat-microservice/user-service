@@ -23,7 +23,7 @@ beforeEach(() => {
 });
 
 afterAll(async () => {
-    await server.close();
+    server.close();
 });
 
 describe("Testing POST /user/login", () => {
