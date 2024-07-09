@@ -7,16 +7,19 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo building user-service image...'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'echo running unit test on user-service...'
+                script {
+                    sh 'echo Building user-service image...'
+                    def image = docker.build('.')
+                    image.inside {
+                        sh 'npm install'
+                        sh 'npm test'
+                    }
+                }
             }
         }
         stage('Release') {
             steps {
-                sh 'push image to registry...'
+                sh 'echo push image to registry...'
             }
         }
         stage('Deploy') {
