@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE} ."
+                sh "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} ."
             }
         }
         stage('Test') {
@@ -21,8 +21,12 @@ pipeline {
         }
         stage('Release') {
             steps {
-                sh 'echo release...'
                 sh 'echo push image to registry...'
+            }
+        }
+        stage('Deployment') {
+            steps {
+                sh 'preparing deployment...'
             }
         }
     }

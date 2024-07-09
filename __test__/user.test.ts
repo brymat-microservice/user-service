@@ -41,7 +41,7 @@ describe("Testing POST /user/login", () => {
             .post("/user/login")
             .send({ email: "john.doe@example.com", password: "password123" });
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(205);
         expect(response.body).toHaveProperty("token", "mocked_token");
         expect(response.body).toHaveProperty("message", "login successful");
         expect(response.body).toHaveProperty("username", "John Doe");
