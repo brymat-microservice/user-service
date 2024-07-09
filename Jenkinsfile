@@ -24,9 +24,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry("", 'registry_credential_id') {
-                        def image = docker.image("${DOCKER_IMAGE}")
-                        image.tag("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
-                        image.push()
+                        sh "docker tag ${DOCKER_IMAGE} ${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
+                        sh "docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                     }
                 }
             }
