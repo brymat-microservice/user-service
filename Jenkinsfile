@@ -4,17 +4,19 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                sh 'ls -al'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'echo building user-service image...'
-                script {
-                    sh 'echo Building user-service image...'
-                    def image = docker.build('.')
-                    image.inside {
-                        sh 'npm install'
-                        sh 'npm test'
-                    }
-                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo building user-service image...'
             }
         }
         stage('Release') {
