@@ -1,21 +1,27 @@
 pipeline {
-    agent any
-
-    environment {
-        SERVICE_DIR = 'user-service'
+    agent {
+        label 'ubuntu-node'
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Build') {
             steps {
-                dir("${SERVICE_DIR}") {
-                    sh 'echo Building user-service...'
-                }
+                sh 'echo building user-service image...'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'echo running unit test on user-service...'
+            }
+        }
+        stage('Release') {
+            steps {
+                sh 'push image to registry...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo deploy user-service...'
             }
         }
     }
