@@ -11,14 +11,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo building...'
-                sh 'npm install'
+                sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }
         stage('Test') {
             steps {
-                sh 'echo testing...'
-                sh 'npm test'
+                sh "docker run --name ${CONTAINER_NAME} ${DOCKER_IMAGE} npm install && npm test"
             }
         }
         stage('Release') {
@@ -26,6 +24,12 @@ pipeline {
                 sh 'echo release...'
                 sh 'echo push image to registry...'
             }
+        }
+    }
+    post {
+        always {
+            sh "docker rm -f ${CONTAINER_NAME}"
+            sh "docker rm image ${DOCKER_IMAGE}"
         }
     }
 }
