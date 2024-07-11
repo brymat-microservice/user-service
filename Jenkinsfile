@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'user-service-image'
+        DOCKER_IMAGE = 'user-service'
         CONTAINER_NAME = 'user-service-container'
         DOCKER_USERNAME = 'brymat24'
     }
@@ -32,10 +32,13 @@ pipeline {
         }
         stage('Deployment') {
             steps {
-                sh 'echo preparing deployment...'
+                sh "sed -i 's/\${BUILD_NUMBER}/${env.BUILD_NUMBER}/g' deployment.yaml"
+                sh "kubectl apply -f deployment.yaml"
+                sh "kubectl apply -f service.yaml"
             }
         }
     }
+    
     post {
         always {
             sh "docker rm -f ${CONTAINER_NAME}"
