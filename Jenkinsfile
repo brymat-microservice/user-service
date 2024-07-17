@@ -17,7 +17,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "docker run --name ${CONTAINER_NAME} ${DOCKER_IMAGE} npm install && npm test"
+                sh "docker run -d --name ${CONTAINER_NAME} ${DOCKER_IMAGE} sleep infinity"
+
+                sh "docker exec ${CONTAINER_NAME} npm install"
+                sh "docker exec ${CONTAINER_NAME} npm test"
+
+                sh "docker stop ${CONTAINER_NAME}"
+                sh "docker rm ${CONTAINER_NAME}"
             }
         }
         stage('Release') {
