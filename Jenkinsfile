@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE} ."
+                sh "docker build --platform linux/arm64 -t ${DOCKER_IMAGE} ."
             }
         }
         stage('Test') {
